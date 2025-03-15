@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:weather_app_task/core/api/constants.dart';
 import 'package:weather_app_task/core/api/failure_model.dart';
-import 'package:weather_app_task/core/api/http_helper.dart';
+import 'package:weather_app_task/core/api/dio_helper.dart';
 
 class WeatherRepository {
   /// Fetches weather data.
@@ -13,8 +13,8 @@ class WeatherRepository {
   Future<Either<FailureModel, Map>> getWeatherData({
     required String country,
   }) async {
-    return await HttpHelper.handleRequest(() async {
-      return await HttpHelper.getData(
+    return await DioHelper.handleRequest(() async {
+      return await DioHelper.getData(
         linkUrl:
             '${Constants.baseUrl}forecast.json?key=${Constants.apiKey}&q=$country&days=1&aqi=no&alerts=no',
       );

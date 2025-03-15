@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app_task/core/config/assets_box.dart';
-import 'package:weather_app_task/features/weather_page/view%20model/cubit/get_weather_cubit.dart';
+import 'package:weather_app_task/features/weather_page/view%20model/bloc/get_weather_bloc.dart';
 import 'package:weather_app_task/features/weather_page/views/widgets/main_weather_data.dart';
 import 'package:weather_app_task/features/weather_page/views/widgets/secondary_weather_data.dart';
 import 'package:weather_app_task/features/weather_page/views/widgets/weather_list.dart';
@@ -27,10 +27,10 @@ class _WeatherPageState extends State<WeatherPage> {
   void initState() {
     super.initState();
 
-    /// fetches weather data when the page is initialized.
-    BlocProvider.of<GetWeatherCubit>(
+    // Dispatch the FetchWeather event when the widget initializes.
+    BlocProvider.of<GetWeatherBloc>(
       context,
-    ).getWeatherData(country: widget.country);
+    ).add(FetchWeather(country: widget.country));
   }
 
   ///
@@ -91,7 +91,7 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetWeatherCubit, GetWeatherState>(
+    return BlocBuilder<GetWeatherBloc, GetWeatherState>(
       builder: (context, state) {
         /// if the state is loading, show a loading indicator
         if (state is GetWeatherLoading) {
